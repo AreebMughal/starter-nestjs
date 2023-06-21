@@ -13,11 +13,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
   async validate(payload) {
-    const user = await this._userService.findOneById(payload.id);
-
-    if (!user) {
-      throw new UnauthorizedException('You are not authorized to perform the operation');
-    }
-    return user;
+    // const user = await this._userService.findOneById(payload.id);
+    // if (!user) {
+    //   throw new UnauthorizedException('You are not authorized to perform the operation');
+    // }
+    // return user;
   }
 }

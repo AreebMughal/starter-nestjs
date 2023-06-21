@@ -1,7 +1,0 @@
-.github
-node_modules
-.nest
-.dist
-build
-Dockerfile
-.gitignore

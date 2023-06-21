@@ -3,30 +3,27 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NOT_FOUND_RESPONSE } from 'src/constants';
 import { EMAIL_ALREADY_EXIST_RESPONSE } from 'src/constants/response.types';
-import { BaseService } from 'src/core/base/base.service';
+import { BaseRepository } from 'src/core/base/base.service';
 import { User } from 'src/entities';
 import { EmailDto } from 'src/generic-dto/email.dto';
 import { UtilitiesService } from 'src/helpers/utils';
-import { Repository } from 'typeorm';
 import { UserDto } from './dto/user.dto';
 
 @Injectable()
-export class UsersService extends BaseService<User> {
+export class UsersService {
   constructor(
     private readonly helper: UtilitiesService,
     private readonly _jwtService: JwtService,
-    @InjectRepository(User) private readonly repository: Repository<User>
-  ) {
-    super(repository);
-  }
+    @InjectRepository(User) private readonly repository: BaseRepository<User>
+  ) {}
 
   // controller functions
 
   async createUser(payload: UserDto): Promise<any> {
     const { userName, email, password } = payload;
 
-    const user_email = await this.findOne({ where: { email } });
-    const user_name = await this.findOne({ where: { userName } });
+    const user_email = await this.repository.find({ where: { email } });
+    const user_name = await this.repository.find({ where: { userName } });
 
     if (user_email)
       throw new HttpException(EMAIL_ALREADY_EXIST_RESPONSE.message, HttpStatus.CONFLICT);
@@ -35,7 +32,7 @@ export class UsersService extends BaseService<User> {
 
     try {
       const encodedPassword: string = this.helper.encodePassword(password);
-      const newUser: any = await this.create({
+      const newUser: any = await this.repository.create({
         ...payload,
         password: encodedPassword
       });
@@ -50,7 +47,7 @@ export class UsersService extends BaseService<User> {
   // utilities functions
 
   async findUserByArgs(args: object) {
-    const user = await this.findOne({
+    const user = await this.repository.find({
       ...args
     });
     if (!user) throw new HttpException(NOT_FOUND_RESPONSE.message, HttpStatus.NOT_FOUND);
@@ -59,8 +56,8 @@ export class UsersService extends BaseService<User> {
 
   async getUserByEmailOrUsername(body: EmailDto) {
     const { email } = body;
-    let user = await this.findOne({ where: { email } });
-    if (!user) user = await this.findOne({ where: { userName: email } });
+    let user = await this.repository.find({ where: { email } });
+    if (!user) user = await this.repository.find({ where: { userName: email } });
     if (!user) throw new HttpException('No user found', HttpStatus.NOT_FOUND);
   }
 }

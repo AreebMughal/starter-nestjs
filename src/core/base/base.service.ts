@@ -7,10 +7,7 @@ import { PaginationDto } from '../../generic-dto/pagination.dto';
  *
  */
 @Injectable()
-export class BaseService<T> extends Repository<T> {
-  constructor(repository: Repository<T>) {
-    super(repository.target, repository.manager, repository.queryRunner);
-  }
+export class BaseRepository<T> extends Repository<T> {
   /**
    * @param payload
    * @param include

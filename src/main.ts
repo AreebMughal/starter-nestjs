@@ -9,19 +9,14 @@ declare const module: any;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: [
-      'http://localhost:3000',
-      'http://localhost:3001',
-      'http://localhost:3002',
-      'https://devfront.my-quicksteps.com'
-    ]
+    origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002']
   });
 
   const options = new DocumentBuilder()
-    .setTitle('Quick Step')
-    .setDescription('The Quick Step API description')
+    .setTitle('Event Management System - EMS')
+    .setDescription('The Event Management System - EMS API description')
     .setVersion('1.0')
-    .addTag('Quick Step')
+    .addTag('Event Management System')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
