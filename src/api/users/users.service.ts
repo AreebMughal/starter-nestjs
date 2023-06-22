@@ -23,12 +23,12 @@ export class UsersService {
     const { userName, email, password } = payload;
 
     const user_email = await this.repository.find({ where: { email } });
-    const user_name = await this.repository.find({ where: { userName } });
+    // const user_name = await this.repository.find({ where: { userName } });
 
     if (user_email)
       throw new HttpException(EMAIL_ALREADY_EXIST_RESPONSE.message, HttpStatus.CONFLICT);
 
-    if (user_name) throw new HttpException('Username already exist', HttpStatus.CONFLICT);
+    // if (user_name) throw new HttpException('Username already exist', HttpStatus.CONFLICT);
 
     try {
       const encodedPassword: string = this.helper.encodePassword(password);
@@ -57,7 +57,7 @@ export class UsersService {
   async getUserByEmailOrUsername(body: EmailDto) {
     const { email } = body;
     let user = await this.repository.find({ where: { email } });
-    if (!user) user = await this.repository.find({ where: { userName: email } });
+    // if (!user) user = await this.repository.find({ where: { userName: email } });
     if (!user) throw new HttpException('No user found', HttpStatus.NOT_FOUND);
   }
 }

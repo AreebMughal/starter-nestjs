@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ROLE_TYPE } from 'src/constants';
 import { BaseEntity } from './base.entity';
+import { Profile } from './profile.entity';
 
 @Entity({
   name: 'tbl_user'
@@ -10,17 +11,8 @@ export class User extends BaseEntity<User> {
   id: number;
 
   @Column({
-    type: 'text',
-    unique: true,
-    name: 'user_name',
-    nullable: true
-  })
-  userName: string;
-
-  @Column({
     type: 'enum',
     enum: ROLE_TYPE,
-    default: ROLE_TYPE.ADMIN,
     nullable: false
   })
   role: string;
@@ -28,8 +20,10 @@ export class User extends BaseEntity<User> {
   @Column({ type: 'text', unique: true, nullable: false })
   email: string;
 
-  @Column({ type: 'text', unique: true, nullable: true })
-  phone: string;
+  @Column({
+    type: 'text'
+  })
+  password: string;
 
   @Column({
     type: 'bool',
@@ -38,8 +32,6 @@ export class User extends BaseEntity<User> {
   })
   isEmailVerified: boolean;
 
-  @Column({
-    type: 'text'
-  })
-  password: string;
+  @OneToOne(() => Profile, (profile) => profile.userId)
+  profile: Profile;
 }
