@@ -13,10 +13,10 @@ async function bootstrap() {
   });
 
   const options = new DocumentBuilder()
-    .setTitle('Event Management System - EMS')
-    .setDescription('The Event Management System - EMS API description')
+    .setTitle('Be ArtEvent - EMS')
+    .setDescription('The Be ArtEvent - EMS API description')
     .setVersion('1.0')
-    .addTag('Event Management System')
+    .addTag('Be ArtEvent')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
