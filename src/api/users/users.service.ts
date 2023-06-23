@@ -7,7 +7,7 @@ import { BaseRepository } from 'src/core/base/base.service';
 import { User } from 'src/entities';
 import { EmailDto } from 'src/generic-dto/email.dto';
 import { UtilitiesService } from 'src/helpers/utils';
-import { UserDto } from './dto/user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -19,25 +19,23 @@ export class UsersService {
 
   // controller functions
 
-  async createUser(payload: UserDto): Promise<any> {
-    const { userName, email, password } = payload;
+  async createUser(payload: CreateUserDto): Promise<any> {
+    const { email } = payload;
 
     const user_email = await this.repository.find({ where: { email } });
     // const user_name = await this.repository.find({ where: { userName } });
-
-    if (user_email)
+    console.log(user_email);
+    if (user_email.length > 0)
       throw new HttpException(EMAIL_ALREADY_EXIST_RESPONSE.message, HttpStatus.CONFLICT);
 
     // if (user_name) throw new HttpException('Username already exist', HttpStatus.CONFLICT);
 
     try {
-      const encodedPassword: string = this.helper.encodePassword(password);
+      // const encodedPassword: string = this.helper.encodePassword(password);
       const newUser: any = await this.repository.create({
-        ...payload,
-        password: encodedPassword
+        ...payload
       });
-
-      delete newUser.password;
+      console.log(newUser);
       return newUser;
     } catch (error: any) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);

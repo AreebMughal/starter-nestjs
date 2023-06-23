@@ -43,17 +43,17 @@ export class BaseRepository<T> extends Repository<T> {
   //  * @param condition any
   //  * @returns Model
   //  */
-  // public findAndCountAll(condition: any) {
-  //   return this.findAndCountAll({ where: condition });
-  // }
+  public findAndCountAll(condition: any) {
+    return this.findAndCountAll({ where: condition });
+  }
 
-  // /**
-  //  * Create new record.
-  //  *
-  //  * @param fields any
-  //  * @param userId number
-  //  * @returns Model
-  //  */
+  /**
+   * Create new record.
+   *
+   * @param fields any
+   * @param userId number
+   * @returns Model
+   */
   // public create(fields: any, userId?: any, include?: any) {
   //   fields['createdBy'] = userId;
 
