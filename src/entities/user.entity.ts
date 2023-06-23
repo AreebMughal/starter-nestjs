@@ -21,7 +21,8 @@ export class User extends BaseEntity<User> {
   email: string;
 
   @Column({
-    type: 'text'
+    type: 'text',
+    default: ''
   })
   password: string;
 

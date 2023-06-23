@@ -33,8 +33,11 @@ export class UsersService {
     try {
       // const encodedPassword: string = this.helper.encodePassword(password);
       const newUser: any = await this.repository.create({
-        ...payload
+        ...payload,
+        createdBy: 0,
+        updatedBy: 0
       });
+      await this.repository.save(newUser);
       console.log(newUser);
       return newUser;
     } catch (error: any) {
