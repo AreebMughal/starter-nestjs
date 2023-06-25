@@ -135,11 +135,11 @@ export class UtilitiesService {
   }
 
   public generateOtp() {
-    return Math.floor(1000 + Math.random() * 9000);
+    return Math.floor(1000 + Math.random() * 999999);
   }
 
-  public generateFutureDate(time) {
-    return new Date(new Date().getTime() + time);
+  public generateFutureDate(minutes: number) {
+    return new Date(new Date().getTime() + minutes * 60000);
   }
 
   // public async sendOtp(phoneNumber, otp) {

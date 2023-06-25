@@ -13,12 +13,12 @@ export class AuthService {
   ) {}
 
   async login(userCredentials: LoginDto) {
-    const user: any = await this.userService.getUserByEmailOrUsername(userCredentials);
+    const user: any = await this.userService.getUserByEmail(userCredentials);
 
     if (!user) throw new HttpException('user not found', HttpStatus.NOT_FOUND);
 
     const isPasswordValid = this.helper.isPasswordValid(userCredentials.password, user.password);
-
+    console.log(isPasswordValid);
     if (!isPasswordValid) throw new HttpException('invalid email/password', HttpStatus.CONFLICT);
 
     const token: string = await this._jwtService.signAsync(
@@ -26,7 +26,7 @@ export class AuthService {
       { secret: process.env.JWT_SECRET_KEY }
     );
 
-    const responseWithToken = { ...user.dataValues, token };
+    const responseWithToken = { ...user, token };
     const userWithoutPassword = this.helper.excludeOnlyPwd(responseWithToken);
     return userWithoutPassword;
   }

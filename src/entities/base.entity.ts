@@ -3,13 +3,17 @@ import { CreateDateColumn, UpdateDateColumn, Column } from 'typeorm';
 export abstract class BaseEntity<T> {
   @Column({
     type: 'int',
-    name: 'created_by'
+    name: 'created_by',
+    nullable: true,
+    default: null
   })
   createdBy: number;
 
   @Column({
     type: 'int',
-    name: 'updated_by'
+    name: 'updated_by',
+    nullable: true,
+    default: null
   })
   updatedBy: number;
 

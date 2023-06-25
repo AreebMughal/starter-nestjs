@@ -4,7 +4,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { LoginWithGoogleDto } from './dto/login-with-google.dto';
 
-@ApiTags('login') //used to make the blocks of specific apis in swagge
+@ApiTags('auth') //used to make the blocks of specific apis in swagge
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}

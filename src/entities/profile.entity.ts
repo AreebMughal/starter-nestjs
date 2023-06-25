@@ -22,15 +22,15 @@ export class Profile extends BaseEntity<Profile> {
   @Column({ type: 'text', name: 'last_name' })
   lastName: string;
 
-  @Column({ type: 'text', name: 'phone_number' })
+  @Column({ type: 'text', name: 'phone_number', default: '' })
   phoneNumber: string;
 
-  @Column({ type: 'enum', enum: GENDER, nullable: false })
+  @Column({ type: 'enum', enum: GENDER, nullable: false, default: GENDER.NULL })
   gender: string;
 
-  @Column({ type: 'text', nullable: false })
-  dob: string;
+  @Column({ nullable: false, default: '' })
+  dob: Date;
 
-  @Column({ type: 'text', nullable: false })
+  @Column({ type: 'text', nullable: false, default: '' })
   address: string;
 }
